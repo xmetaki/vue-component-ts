@@ -37,7 +37,7 @@ export default class SearchTreeEntry extends Vue {
   setScopeRecusive(data:any) {
     if (Array.isArray(data)) data.forEach(item => this.setScopeRecusive(item));
     else {
-      data.scopedSlots = { title: 'title' }
+      data.scopedSlots = { title: this.replaceFields.title }
       this.setScopeRecusive(data[this.replaceFields.children] || []);
     }
   }

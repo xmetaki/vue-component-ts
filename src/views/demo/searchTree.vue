@@ -13,24 +13,24 @@ import tree from '../../../package/search-tree/index.vue'
   }
 })
 export default class SearchTree extends Vue {
-  public replaceFields = { children: 'childs', title: 'title', key: 'k' };
+  public replaceFields = { children: 'childs', title: 'meta', key: 'k' };
   public data = [{
     k: 'aaa',
-    title: '模拟数据1',
+    meta: '模拟数据1',
     childs: [{
       k: 'aaa-a',
-      title: '模拟数据1-1'
+      meta: '模拟数据1-1'
     }]
   },
   {
     k: 'bbb',
-    title: '模拟数据2',
+    meta: '模拟数据2',
     childs: [{
       k: 'adada',
-      title: '模拟数据2-1'
+      meta: '模拟数据2-1'
     }, {
       k: 'eqe',
-      title: '模拟数据2-2'
+      meta: '模拟数据2-2'
     }]
   }]
 
