@@ -1,8 +1,8 @@
 <template>
-    <tree :g-data="scopedData" :replace-fields="replaceFields" @onNodeSelected="onNodeSelected"></tree>
+    <tree :status="status" :g-data="scopedData" :replace-fields="replaceFields" @onNodeSelected="onNodeSelected" />
 </template>
 <script lang="ts">
-import { Vue, Component, Watch, Prop, Emit } from 'vue-property-decorator'
+import { Vue, Component, Prop, Emit } from 'vue-property-decorator'
 import tree from './search-tree.vue'
 
 @Component({
@@ -21,6 +21,9 @@ export default class SearchTreeEntry extends Vue {
 
   @Prop({ required: true, default: [] })
   data!:[]
+
+  @Prop({ required: false, default: { success: true, message: '加载成功' } })
+  status!:{ success: boolean, message: string }
 
   created() {
   }

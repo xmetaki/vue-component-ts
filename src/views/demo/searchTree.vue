@@ -1,6 +1,6 @@
 <template>
   <div class="test">
-    <tree :data="data" :replace-fields="replaceFields" @onNodeSelected="onNodeSelected"></tree>
+    <tree style="width:200px" :status="{success: true, message: ''}" :data="data" :replace-fields="replaceFields" @onNodeSelected="onNodeSelected"></tree>
   </div>
 </template>
 <script lang="ts">
@@ -13,24 +13,24 @@ import tree from '../../../package/search-tree/index.vue'
   }
 })
 export default class SearchTree extends Vue {
-  public replaceFields = { children: 'childs', title: 'meta', key: 'k' };
+  public replaceFields = { children: 'childs', title: 'damn', key: 'k' };
   public data = [{
     k: 'aaa',
-    meta: '模拟数据1',
+    damn: '模拟数据11111111111111111111111111111111111111',
     childs: [{
       k: 'aaa-a',
-      meta: '模拟数据1-1'
+      damn: '模拟数据1-1'
     }]
   },
   {
     k: 'bbb',
-    meta: '模拟数据2',
+    damn: '模拟数据2',
     childs: [{
       k: 'adada',
-      meta: '模拟数据2-1'
+      damn: '模拟数据2-1'
     }, {
       k: 'eqe',
-      meta: '模拟数据2-2'
+      damn: '模拟数据2-2'
     }]
   }]
 

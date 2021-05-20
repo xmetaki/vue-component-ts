@@ -1,19 +1,31 @@
 <template>
   <div class="meta-search-tree">
-      <a-input-search style="margin-bottom: 8px; margin-top: 8px" placeholder="Search" @change="onChange" />
-      <a-tree :expanded-keys="expandedKeys"
-              :auto-expand-parent="autoExpandParent"
-              :tree-data="fData"
-              :replace-fields="replaceFields"
-              @expand="onExpand"
-              @select="onSelect">
-                <template slot="title" slot-scope="{title}">
-                    <span v-if="title.indexOf(searchValue) > -1">
-                      <a-icon type="project" /> {{ title.substr(0, title.indexOf(searchValue)) }}<span style="color: #f50">{{ searchValue }}</span>{{ title.substr(title.indexOf(searchValue) + searchValue.length) }}
-                    </span>
-                    <span v-else><a-icon type="project" /> {{ title }}</span>
-                </template>
-      </a-tree>
+      <div class="m-input-search">
+        <a-input-search style="margin-bottom: 8px; margin-top: 8px" placeholder="Search" @change="onChange" />
+      </div>
+      <div class="m-a-tree">
+        <template v-if="status.success">
+        <a-tree :expanded-keys="expandedKeys"
+                :auto-expand-parent="autoExpandParent"
+                :tree-data="fData"
+                :replace-fields="replaceFields"
+                @expand="onExpand"
+                @select="onSelect">
+                  <template :slot="replaceFields.title" slot-scope="data">
+                      <span v-if="data[replaceFields.title].indexOf(searchValue) > -1">
+                        <a-icon type="project" /> {{ data[replaceFields.title].substr(0, data[replaceFields.title].indexOf(searchValue)) }}<span style="color: #f50">{{ searchValue }}</span>{{ data[replaceFields.title].substr(data[replaceFields.title].indexOf(searchValue) + searchValue.length) }}
+                      </span>
+                      <span v-else><a-icon type="project" /> {{ data[replaceFields.title] }}</span>
+                  </template>
+        </a-tree>
+        </template>
+        <template v-else>
+          <div class="m-unsuccess-message">
+            <a-spin></a-spin>
+           <span>{{ status.message }}</span>
+          </div>
+        </template>
+      </div>
   </div>
 </template>
 <script lang="ts">
@@ -35,6 +47,9 @@ export default class SearchTree extends Vue {
   public searchValue = ''
   public dataFilter = (item:dataType[]):dataType[] => item
 
+  mounted() {
+  }
+
   @Prop({ required: true, default: [{ title: '无数据', key: 'none' }] })
   gData!:[]
 
@@ -45,6 +60,9 @@ export default class SearchTree extends Vue {
     }
   })
   replaceFields!:{children: string, title: string, key: string}
+
+  @Prop({ required: false, default: { success: true, message: '加载成功' } })
+  status!:{ success: boolean, message: string }
 
   get fData() {
     return this.dataFilter(this.gData as any);
@@ -125,9 +143,30 @@ export default class SearchTree extends Vue {
     background-color: #fff;
     box-shadow: 0px 1px 2px 3px #efefef;
     border-radius: 3px;
-    min-width: 20vw;
+    width: 100%;
     height: 100%;
     text-align: left;
     overflow: auto;
+    .m-input-search {
+      width: 100%;
+      height: auto;
+    }
+    .m-a-tree{
+      width: 100%;
+      flex: 1;
+      overflow: auto;
+    }
+    .m-unsuccess-message{
+      margin: 10px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+
+      span{
+        color: #c5c5c5;
+        max-width: 100%;
+        text-align: center;
+      }
+    }
   }
 </style>
